@@ -1,0 +1,30 @@
+#ifndef GLOBALS_H
+#define GLOBALS_H
+#include "pebble_os.h"
+#include "pebble_app.h"
+#include "pebble_fonts.h"
+	
+#define APP_VERSION "Version 1.0"	//also change in PBL_APP_INFO in main.c 
+	
+#define CMD_BATTERY 				0x00000001
+#define CMD_DATA_CONN_TYPE 			0x00000002
+#define CMD_MIL_TIME 				0x00000004
+#define CMD_BAT_WARN_LEVEL 			0x00000008
+#define CMD_UPDATE_RATE 			0x00000010
+#define CMD_VIBERATE 				0x00000020
+#define CMD_NUM_SMS 				0x00000040
+#define CMD_NUM_MISSED_CALLS 		0x00000080
+#define CMD_NUM_GMAILS 				0x00000100
+#define CMD_WEATHER_ICON 			0x00000200
+#define CMD_WEATHER_TEMP_HUMID 		0x00000400
+#define CMD_PLUGGED_IN 				0x00000800
+#define CMD_NUM_HANGOUTS 			0x00001000
+#define CMD_TEXT_MESSAGES			0x00002000
+#define CMD_TEXT_RECEIVERS			0x00004000
+#define CMD_SEND_TEXT				0x00008000
+#define CMD_APP_VERSION				0x00010000
+#define CMD_RINGER_MODE_SET			0x00020000
+#define CMD_RINGER_MODE_READ		0x00040000
+#define CMD_RINGER_CHANGE_VOLUME	0x00080000
+	
+#endif

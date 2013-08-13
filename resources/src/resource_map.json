@@ -1,0 +1,281 @@
+{
+    "media": [
+        {
+            "defName": "IMAGE_RINGER",
+            "type": "png",
+            "file": "images/ringer.png"
+        },
+        {
+            "defName": "IMAGE_VOL_UP",
+            "type": "png",
+            "file": "images/vol up.png"
+        },
+        {
+            "defName": "IMAGE_VOL_DOWN",
+            "type": "png",
+            "file": "images/vol down.png"
+        },
+        {
+            "defName": "IMAGE_LOGO",
+            "type": "png",
+            "file": "images/logo.png"
+        },
+        {
+            "defName": "IMAGE_PHONE",
+            "type": "png",
+            "file": "images/phone.png"
+        },
+        {
+            "defName": "IMAGE_HANGOUT",
+            "type": "png",
+            "file": "images/hangout.png"
+        },
+        {
+            "defName": "IMAGE_SMS",
+            "type": "png",
+            "file": "images/bubble.png"
+        },
+        {
+            "defName": "IMAGE_ENVELOPE",
+            "type": "png",
+            "file": "images/envelope.png"
+        },
+        {
+            "defName": "ICON_BATTERY_PLUGGED",
+            "type": "png",
+            "file": "images/battery_plugged.png"
+        },
+        {
+            "defName": "IMAGE_WINTER_MIX",
+            "type": "png",
+            "file": "images/Winter Mix.png"
+        },
+        {
+            "defName": "IMAGE_WIND",
+            "type": "png",
+            "file": "images/Wind.png"
+        },
+        {
+            "defName": "IMAGE_THUNDERSTORM",
+            "type": "png",
+            "file": "images/Thunderstroms.png"
+        },
+        {
+            "defName": "IMAGE_SNOW_RAIN",
+            "type": "png",
+            "file": "images/Snow Rain.png"
+        },
+        {
+            "defName": "IMAGE_SLEET",
+            "type": "png",
+            "file": "images/Sleet.png"
+        },
+        {
+            "defName": "IMAGE_SCATTERED_CLOUDS_NIGHT",
+            "type": "png",
+            "file": "images/Scattered Clouds Night.png"
+        },
+        {
+            "defName": "IMAGE_SCATTERED_CLOUDS_DAY",
+            "type": "png",
+            "file": "images/Scattered Clouds Day.png"
+        },
+        {
+            "defName": "IMAGE_RAIN",
+            "type": "png",
+            "file": "images/Rain.png"
+        },
+        {
+            "defName": "IMAGE_RAIN_SLEET",
+            "type": "png",
+            "file": "images/Rain Sleet.png"
+        },
+        {
+            "defName": "IMAGE_NO_WEATHER",
+            "type": "png",
+            "file": "images/No Weather Info.png"
+        },
+        {
+            "defName": "IMAGE_MEDIUM_SNOW",
+            "type": "png",
+            "file": "images/Medium Snow.png"
+        },
+        {
+            "defName": "IMAGE_LIGHT_SNOW",
+            "type": "png",
+            "file": "images/Light Snow.png"
+        },
+        {
+            "defName": "IMAGE_LIGHT_RAIN",
+            "type": "png",
+            "file": "images/Light Rain.png"
+        },
+        {
+            "defName": "IMAGE_LIGHT_FOG_NIGHT",
+            "type": "png",
+            "file": "images/Light Fog Night.png"
+        },
+        {
+            "defName": "IMAGE_LIGHT_FOG_DAY",
+            "type": "png",
+            "file": "images/Light Fog Day.png"
+        },
+        {
+            "defName": "IMAGE_LIGHT_CLOUDS_NIGHT",
+            "type": "png",
+            "file": "images/Light Clouds Night.png"
+        },
+        {
+            "defName": "IMAGE_LIGHT_CLOUDS_DAY",
+            "type": "png",
+            "file": "images/Light Clouds Day.png"
+        },
+        {
+            "defName": "IMAGE_HEAVY_SNOW",
+            "type": "png",
+            "file": "images/Heavy Snow.png"
+        },
+        {
+            "defName": "IMAGE_HEAVY_RAIN",
+            "type": "png",
+            "file": "images/Heavy Rain.png"
+        },
+        {
+            "defName": "IMAGE_FULL_CLOUDS",
+            "type": "png",
+            "file": "images/Full Clouds.png"
+        },
+        {
+            "defName": "IMAGE_FOG",
+            "type": "png",
+            "file": "images/Fog.png"
+        },
+        {
+            "defName": "IMAGE_CLEAR_SKY_NIGHT",
+            "type": "png",
+            "file": "images/Clear Sky Night.png"
+        },
+        {
+            "defName": "IMAGE_BROKEN_CLOUDS_THUNDERSTORM_NIGHT",
+            "type": "png",
+            "file": "images/Broken Clouds Thunderstorm Night.png"
+        },
+        {
+            "defName": "IMAGE_BROKEN_CLOUDS_THUNDERSTORM_DAY",
+            "type": "png",
+            "file": "images/Broken Clouds Thunderstorm Day.png"
+        },
+        {
+            "defName": "IMAGE_BROKEN_CLOUDS_SNOW_NIGHT",
+            "type": "png",
+            "file": "images/Broken Clouds Snow Night.png"
+        },
+        {
+            "defName": "IMAGE_BROKEN_CLOUDS_SNOW_DAY",
+            "type": "png",
+            "file": "images/Broken Clouds Snow Day.png"
+        },
+        {
+            "defName": "IMAGE_BROKEN_CLOUDS_RAIN_NIGHT",
+            "type": "png",
+            "file": "images/Broken Clouds Rain Night.png"
+        },
+        {
+            "defName": "IMAGE_BROKEN_CLOUDS_RAIN_DAY",
+            "type": "png",
+            "file": "images/Broken Clouds Rain Day.png"
+        },
+        {
+            "defName": "IMAGE_BROKEN_CLOUDS_NIGHT",
+            "type": "png",
+            "file": "images/Broken Clouds Night.png"
+        },
+        {
+            "defName": "IMAGE_BROKEN_CLOUDS_DAY",
+            "type": "png",
+            "file": "images/Broken Clouds Day.png"
+        },
+        {
+            "defName": "IMAGE_BLOWING_SNOW",
+            "type": "png",
+            "file": "images/Blowing Snow.png"
+        },
+        {
+            "defName": "IMAGE_CLEAR_SKY_DAY",
+            "type": "png",
+            "file": "images/Clear Sky Day.png"
+        },
+        {
+            "defName": "ICON_APP_IMAGE",
+            "type": "png",
+            "file": "images/app_icon.png"
+        },
+        {
+            "defName": "ICON_2G",
+            "type": "png",
+            "file": "images/2G.png"
+        },
+        {
+            "defName": "ICON_DISCONNECTED",
+            "type": "png",
+            "file": "images/data_disconnected.png"
+        },
+        {
+            "defName": "ICON_WIFI",
+            "type": "png",
+            "file": "images/wifi.png"
+        },
+        {
+            "defName": "ICON_4G",
+            "type": "png",
+            "file": "images/4G.png"
+        },
+        {
+            "defName": "ICON_3G",
+            "type": "png",
+            "file": "images/3G.png"
+        },
+        {
+            "defName": "ICON_BATTERY_LOW",
+            "type": "png",
+            "file": "images/battery_low.png"
+        },
+        {
+            "defName": "ICON_BATTERY",
+            "type": "png",
+            "file": "images/battery.png"
+        },
+        {
+            "characterRegex": "[0-9]",
+            "defName": "FONT_TIMES_ROMAN_15",
+            "type": "font",
+            "file": "fonts/Time Roman.ttf"
+        },
+        {
+            "characterRegex": "[0-9,A-Z,a-z,\\,,\\ \\:\\%\\-\\/]",
+            "defName": "FONT_TIMES_ROMAN_20",
+            "type": "font",
+            "file": "fonts/Time Roman.ttf"
+        },
+        {
+            "characterRegex": "[0-9,A-Z,a-z,\\,,\\ ,\\.,\\+,\\-,\\:]",
+            "defName": "FONT_NEVIS_15",
+            "type": "font",
+            "file": "fonts/nevis.ttf"
+        },
+        {
+            "characterRegex": "[0-9,a-z,A-Z:]",
+            "defName": "FONT_NEVIS_BOLD_40",
+            "type": "font",
+            "file": "fonts/nevis.ttf"
+        },
+        {
+            "characterRegex": "[0-9,A-Z,a-z,\\,,\\ ,\\.,\\+,\\-]",
+            "defName": "FONT_NEVIS_20",
+            "type": "font",
+            "file": "fonts/nevis.ttf"
+        }
+    ],
+    "friendlyVersion": "VERSION",
+    "versionDefName": "APP_RESOURCES"
+}
