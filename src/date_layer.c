@@ -26,14 +26,14 @@ void date_layer_set_date(PblTm* time){
 	}
 	*destination++ = ',';
 	*destination++ = ' ';
-//	char * temp = itoa(time->tm_mday);
+	char * temp = itoa(time->tm_mday);
 	if(time->tm_mday < 10){
 		*destination++ = '0';
-		*destination++ = '0' + time->tm_mday;
+		*destination++ = *temp;
 	}
 	else {
-		*destination++ = '0' + (char)(time->tm_mday / 10);
-		*destination++ = '0' + (time->tm_mday % 10);
+		*destination++ = *temp;
+		*destination++ = *(temp+1);
 	}
 	*destination++ = ' ';
 	for(i=0;i<3;i++) {
