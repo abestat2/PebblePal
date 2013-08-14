@@ -3,9 +3,9 @@
 #include "pebble_os.h"
 #include "pebble_app.h"
 #include "pebble_fonts.h"
-	
-#define APP_VERSION "Version 1.0"	//also change in PBL_APP_INFO in main.c 
-	
+
+#define APP_VERSION "Version 1.1"	//also change in PBL_APP_INFO in main.c
+
 #define CMD_BATTERY 				0x00000001
 #define CMD_DATA_CONN_TYPE 			0x00000002
 #define CMD_MIL_TIME 				0x00000004
@@ -26,5 +26,5 @@
 #define CMD_RINGER_MODE_SET			0x00020000
 #define CMD_RINGER_MODE_READ		0x00040000
 #define CMD_RINGER_CHANGE_VOLUME	0x00080000
-	
+
 #endif

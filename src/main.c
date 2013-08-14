@@ -6,21 +6,21 @@
 #include "time_layer.h"
 #include "util.h"
 #include "timer.h"
-	
+
 //---------------------------------------------------------------------------------------
-// Private variables and methods	
+// Private variables and methods
 //---------------------------------------------------------------------------------------
 
 
 #define MY_UUID { 0xA3, 0x51, 0xBD, 0x6D, 0x8C, 0xA7, 0x49, 0xA0, 0x8D, 0xBB, 0x32, 0xBC, 0x5A, 0xF6, 0x5F, 0xA5 }
 PBL_APP_INFO(MY_UUID,
              "Pebble Pal", "Davin Nicholas",
-             1, 0, /* App version */
+             1, 1, /* App version */
              RESOURCE_ID_ICON_APP_IMAGE,
              APP_INFO_STANDARD_APP);
 
 //---------------------------------------------------------------------------------------
-// System startup methods	
+// System startup methods
 //---------------------------------------------------------------------------------------
 
 void handle_tick(AppContextRef ctx, PebbleTickEvent* tick) {
@@ -30,8 +30,8 @@ void handle_tick(AppContextRef ctx, PebbleTickEvent* tick) {
 	get_time(&time);
 	uint8_t updateRate = message_get_update_rate();
 	uint16_t updateFlags = NOTHING_TO_UPDATE;
-	
-	if(get_window_manager_state() != WM_INIT) {	
+
+	if(get_window_manager_state() != WM_INIT) {
 		if(day != time.tm_yday) { 		//Date needs updated if the day changes
 			day = time.tm_yday;
 			date_layer_set_date(&time);
@@ -46,7 +46,7 @@ void handle_tick(AppContextRef ctx, PebbleTickEvent* tick) {
 			send_buffer();
 		}
 		else if(updateRate != 0) {
-			if(++updateCounter >= updateRate) {  
+			if(++updateCounter >= updateRate) {
 				updateCounter = 0;
 				if(get_message_state() == FREE) { // this check might not be needed
 					send_buffer();
@@ -59,7 +59,7 @@ void handle_tick(AppContextRef ctx, PebbleTickEvent* tick) {
 void handle_init(AppContextRef ctx) {
 	resource_init_current_app(&APP_RESOURCES);
 	set_app_ctx_ref(ctx);
-	init_window_manager();	
+	init_window_manager();
 	app_timer_send_event(ctx,(uint32_t)500, COLD_START_TIMER_COOKIE);
 }
 
