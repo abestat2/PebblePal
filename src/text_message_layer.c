@@ -139,7 +139,7 @@ void send_request_for_texters() {
 }
 
 void text_message_layer_set_texters(char * textersString) {
-	uint16_t size = cstringLength(textersString);
+	uint16_t size = strlen(textersString);
 	memcpy(&texters[0],textersString,size);
 	texturesLoaded = true;
 	numTexters = get_num_texters();
@@ -277,7 +277,7 @@ void send_request_for_messages() {
 }
 
 void text_message_layer_set_messages(char * messagesString) {
-	uint16_t size = cstringLength(messagesString);
+	uint16_t size = strlen(messagesString);
 	memcpy(&messages[0],messagesString,size);
 	messagesLoaded = true;
 	menu_layer_reload_data(&messagesMenuLayer);

@@ -1,12 +1,12 @@
 #include "globals.h"
 #include "util.h"
 	
-#define DIGITS 4
+/*#define DIGITS 4
 char *itoa(int i)
 {
-  /* Room for INT_DIGITS digits, - and '\0' */
+  
   static char buf[DIGITS + 2];
-  char *p = buf + DIGITS + 1;	/* points to terminating '\0' */
+  char *p = buf + DIGITS + 1;	
   if (i >= 0) {
     do {
       *--p = '0' + (i % 10);
@@ -14,7 +14,7 @@ char *itoa(int i)
     } while (i != 0);
     return p;
   }
-  else {			/* i < 0 */
+  else {			
     do {
       *--p = '0' - (i % 10);
       i /= 10;
@@ -31,7 +31,7 @@ uint16_t cstringLength(char * cstring) {
 	}
 	return size;
 }
-
+*/
 char * concatStr(char * a, char * b) {
 	static char buffer[50];
 	uint8_t index = 0;

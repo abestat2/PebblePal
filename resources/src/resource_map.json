@@ -71,16 +71,6 @@
             "file": "images/Sleet.png"
         },
         {
-            "defName": "IMAGE_SCATTERED_CLOUDS_NIGHT",
-            "type": "png",
-            "file": "images/Scattered Clouds Night.png"
-        },
-        {
-            "defName": "IMAGE_SCATTERED_CLOUDS_DAY",
-            "type": "png",
-            "file": "images/Scattered Clouds Day.png"
-        },
-        {
             "defName": "IMAGE_RAIN",
             "type": "png",
             "file": "images/Rain.png"
@@ -96,21 +86,6 @@
             "file": "images/No Weather Info.png"
         },
         {
-            "defName": "IMAGE_MEDIUM_SNOW",
-            "type": "png",
-            "file": "images/Medium Snow.png"
-        },
-        {
-            "defName": "IMAGE_LIGHT_SNOW",
-            "type": "png",
-            "file": "images/Light Snow.png"
-        },
-        {
-            "defName": "IMAGE_LIGHT_RAIN",
-            "type": "png",
-            "file": "images/Light Rain.png"
-        },
-        {
             "defName": "IMAGE_LIGHT_FOG_NIGHT",
             "type": "png",
             "file": "images/Light Fog Night.png"
@@ -119,16 +94,6 @@
             "defName": "IMAGE_LIGHT_FOG_DAY",
             "type": "png",
             "file": "images/Light Fog Day.png"
-        },
-        {
-            "defName": "IMAGE_LIGHT_CLOUDS_NIGHT",
-            "type": "png",
-            "file": "images/Light Clouds Night.png"
-        },
-        {
-            "defName": "IMAGE_LIGHT_CLOUDS_DAY",
-            "type": "png",
-            "file": "images/Light Clouds Day.png"
         },
         {
             "defName": "IMAGE_HEAVY_SNOW",
