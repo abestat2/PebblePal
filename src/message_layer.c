@@ -132,7 +132,7 @@ void message_layer_init(Window * window) {
 	messageLayer.hangoutImageLayer.update_proc = load_hangout_image;
 	layer_add_child(&messageLayer.baseLayer, &messageLayer.hangoutImageLayer);	
 	text_layer_init(&messageLayer.hangoutTextLayer, hangoutTextBounds);
-	text_layer_set_font(&messageLayer.hangoutTextLayer, messageLayer.messageFont);
+	text_layer_set_font(&messageLayer.hangoutTextLayer, *messageLayer.messageFont);
 	text_layer_set_text_alignment(&messageLayer.hangoutTextLayer, GTextAlignmentCenter);
 	text_layer_set_background_color(&messageLayer.hangoutTextLayer, GColorBlack);
 	text_layer_set_text_color(&messageLayer.hangoutTextLayer, GColorWhite);

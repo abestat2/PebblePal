@@ -74,14 +74,12 @@ void click_config_provider(ClickConfig **config, void *context) {
 	config[BUTTON_ID_UP]->click.handler = (ClickHandler) volume_up_click_handler;
 }
 
-void configTextLayer(TextLayer* layer, uint8_t yLocation, uint8_t height,bool left,GTextAlignment alignment,const char * text, Window * me) {
+void configTextLayer(TextLayer* layer, uint8_t yLocation, uint8_t height,bool left,GTextAlignment alignment) {
 	text_layer_init(layer, GRect((left ? 0 : 62),yLocation,62,height));
 	text_layer_set_background_color(layer, GColorWhite);
 	text_layer_set_text_color(layer, GColorBlack);
 	text_layer_set_font(layer, *ringerFont);
 	text_layer_set_text_alignment(layer, alignment);
-	text_layer_set_text(layer, text);
-	layer_add_child(&me->layer, &volUpText.layer);
 }
 
 void ringer_window_load(Window *me) {
@@ -96,25 +94,25 @@ void ringer_window_load(Window *me) {
 	action_bar_layer_set_icon(&actionBarLayer, BUTTON_ID_DOWN, &volDown.bmp);
 	ringerFont = get_font_styled_15();
 	
-	configTextLayer(&volUpText,17,20,false,GTextAlignmentRight, "Vol+", me);
-//	text_layer_set_text(&volUpText, "Vol+");
-//	layer_add_child(&me->layer, &volUpText.layer);
+	configTextLayer(&volUpText,17,20,false,GTextAlignmentRight);
+	text_layer_set_text(&volUpText, "Vol+");
+	layer_add_child(&me->layer, &volUpText.layer);
 	
-	configTextLayer(&ringerModeText,64,40,false,GTextAlignmentRight,"Change Ringer",me);
-//	text_layer_set_text(&ringerModeText, "Change Ringer");
-//	layer_add_child(&me->layer, &ringerModeText.layer);
+	configTextLayer(&ringerModeText,64,40,false,GTextAlignmentRight);
+	text_layer_set_text(&ringerModeText, "Change Ringer");
+	layer_add_child(&me->layer, &ringerModeText.layer);
 	
-	configTextLayer(&volDownText,125,20,false,GTextAlignmentRight,"Vol-",me);
-//	text_layer_set_text(&volDownText, "Vol-");
-//	layer_add_child(&me->layer, &volDownText.layer);
+	configTextLayer(&volDownText,125,20,false,GTextAlignmentRight);
+	text_layer_set_text(&volDownText, "Vol-");
+	layer_add_child(&me->layer, &volDownText.layer);
 	
-	configTextLayer(&ringerHeaderText,0,32,true,GTextAlignmentLeft,"Current State:",me);
-//	text_layer_set_text(&ringerHeaderText, "Current State:");
-//	layer_add_child(&me->layer, &ringerHeaderText.layer);
+	configTextLayer(&ringerHeaderText,0,32,true,GTextAlignmentLeft);
+	text_layer_set_text(&ringerHeaderText, "Current State:");
+	layer_add_child(&me->layer, &ringerHeaderText.layer);
 	
-	configTextLayer(&ringerStateText,32,16,true,GTextAlignmentLeft,"Loading",me);
-//	text_layer_set_text(&ringerStateText, "Loading");
-//	layer_add_child(&me->layer, &ringerStateText.layer);
+	configTextLayer(&ringerStateText,32,16,true,GTextAlignmentLeft);
+	text_layer_set_text(&ringerStateText, "Loading");
+	layer_add_child(&me->layer, &ringerStateText.layer);
 }
 
 void ringer_window_unload(Window * me) {
