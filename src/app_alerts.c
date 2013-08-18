@@ -5,7 +5,7 @@
 // Private variables and methods	
 //---------------------------------------------------------------------------------------
 
-static bool alertsEnabled = true;
+bool alertsEnabled = true;
 
 //---------------------------------------------------------------------------------------
 // Public variables and methods	

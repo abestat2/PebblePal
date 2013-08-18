@@ -8,7 +8,6 @@ typedef struct {
 
 void date_layer_set_date(PblTm*);
 void date_layer_init(Window*,PblTm*);
-void date_layer_deinit(void);
 void date_layer_update_display(void);
 
 #endif

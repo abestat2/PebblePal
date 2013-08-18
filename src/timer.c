@@ -5,7 +5,8 @@
 #include "text_message_layer.h"
 #include "ringer_control_layer.h"
 	
-static AppContextRef ctxRef;
+AppContextRef ctxRef;
+AppTimerHandle gapTimerHandle;
 	
 void timer_handler(AppContextRef ctx, AppTimerHandle handle, uint32_t cookie) {	
 	if(cookie == UPDATE_SCREEN_RATE_COOKIE) {
@@ -38,10 +39,27 @@ void timer_handler(AppContextRef ctx, AppTimerHandle handle, uint32_t cookie) {
 	else if(cookie == RINGER_GET_BUFFER_RETRY_COOKIE) {
 		send_ringer_command();
 	}
+	else if(cookie == SEND_APP_VERSION_COOKIE) {
+		send_app_version();
+	}
+	else if(cookie == SEND_COMMAND_RESPONSE_GAP_TIME_COOKIE) {
+		if(get_state_machine() == AWAITING_RESPONSE) {
+			resetStateMachine();
+			window_manager_set_state(WM_BAD);
+		}
+	}
 }
 
 void start_timer(uint32_t timer_val, uint32_t cookie) {
 	app_timer_send_event(ctxRef,timer_val, cookie);
+}
+
+void start_gap_timer() {
+	gapTimerHandle = app_timer_send_event(ctxRef,SEND_COMMAND_GAP_TIMEOUT,SEND_COMMAND_RESPONSE_GAP_TIME_COOKIE);
+}
+
+void stop_gap_timer() {
+	app_timer_cancel_event(ctxRef, gapTimerHandle);
 }
 
 

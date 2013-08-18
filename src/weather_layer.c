@@ -1,6 +1,7 @@
 #include "globals.h"
 #include "weather_layer.h"
 #include "window_manager.h"
+#include "font_manager.h"
 	
 //---------------------------------------------------------------------------------------
 // Private variables and methods	
@@ -25,17 +26,10 @@ const uint8_t weatherImages[] = {
 	RESOURCE_ID_IMAGE_FULL_CLOUDS,
 	RESOURCE_ID_IMAGE_HEAVY_RAIN,
 	RESOURCE_ID_IMAGE_HEAVY_SNOW,
-	RESOURCE_ID_IMAGE_LIGHT_CLOUDS_DAY,
-	RESOURCE_ID_IMAGE_LIGHT_CLOUDS_NIGHT,
 	RESOURCE_ID_IMAGE_LIGHT_FOG_DAY,
 	RESOURCE_ID_IMAGE_LIGHT_FOG_NIGHT,
-	RESOURCE_ID_IMAGE_LIGHT_RAIN,
-	RESOURCE_ID_IMAGE_LIGHT_SNOW,
-	RESOURCE_ID_IMAGE_MEDIUM_SNOW,
 	RESOURCE_ID_IMAGE_RAIN_SLEET,
 	RESOURCE_ID_IMAGE_RAIN,
-	RESOURCE_ID_IMAGE_SCATTERED_CLOUDS_DAY,
-	RESOURCE_ID_IMAGE_SCATTERED_CLOUDS_NIGHT,
 	RESOURCE_ID_IMAGE_SLEET,
 	RESOURCE_ID_IMAGE_SNOW_RAIN,
 	RESOURCE_ID_IMAGE_THUNDERSTORM,
@@ -45,7 +39,7 @@ const uint8_t weatherImages[] = {
 GRect baseWeatherLayerBounds = {.origin={.x=13,.y=65},.size={.w=131,.h=50}};
 GRect imageWeatherLayerBounds = {.origin={.x=0,.y=0},.size={.w=50,.h=50}};
 GRect tempHumidWeatherLayerBounds = {.origin={.x=50,.y=0},.size={.w=81,.h=50}};
-GFont weatherFont; 
+GFont * weatherFont; 
 WeatherLayer weatherLayer;
 char * weather_layer_get_temp_string(bool);
 char * weather_layer_get_humid_string();
@@ -88,8 +82,8 @@ void weather_layer_init(Window * window) {
 	text_layer_set_text_alignment(&weatherLayer.tempHumidLayer, GTextAlignmentLeft);
 	text_layer_set_text_color(&weatherLayer.tempHumidLayer, GColorWhite);
 	text_layer_set_background_color(&weatherLayer.tempHumidLayer, GColorBlack);	  
-	weatherFont = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_TIMES_ROMAN_20));
-	text_layer_set_font(&weatherLayer.tempHumidLayer, weatherFont);
+	weatherFont = get_font_20();
+	text_layer_set_font(&weatherLayer.tempHumidLayer, *weatherFont);
 	text_layer_set_text(&weatherLayer.tempHumidLayer, DEFAULT_TEMP_TEXT);
 	
 	layer_add_child(&weatherLayer.baseLayer,&weatherLayer.tempHumidLayer.layer);
@@ -114,5 +108,4 @@ void weather_layer_deinit() {
 		bmp_deinit_container(&weatherLayer.imageContainer);
 		weatherLayer.imageLoaded = false;
 	}
-	fonts_unload_custom_font(weatherFont);
 }

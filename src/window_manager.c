@@ -14,17 +14,20 @@
 #include "ringer_control_layer.h"
 #include "timer.h"
 #include "main_menu.h"
+#include "font_manager.h"
 	
 //---------------------------------------------------------------------------------------
 // Private variables and methods	
 //---------------------------------------------------------------------------------------
 
-static uint16_t layersToProcess = NOTHING_TO_UPDATE;
-static Window mainWindow;
-static WindowStates windowManagerState = WM_INIT;
-static Window errorWindow;
-static SplashScreen splashScreen;
-static WindowSubStates windowManagerSubState = WM_S_MAIN;
+uint16_t layersToProcess = NOTHING_TO_UPDATE;
+Window mainWindow;
+WindowStates windowManagerState = WM_INIT;
+Window errorWindow;
+SplashScreen splashScreen;
+WindowSubStates windowManagerSubState = WM_S_MAIN;
+InverterLayer inverterLayer;
+WindowThemes windowTheme;
 
 void redraw_error_window(Layer* layer, GContext* ctx) {
 	graphics_context_set_fill_color(ctx, GColorBlack);
@@ -63,10 +66,10 @@ void build_splash_screen(void) {
 	layer_set_frame(&splashScreen.logoContainer.layer.layer, GRect(31,5,81,51));
 	layer_add_child(&splashScreen.splashWindow.layer,&splashScreen.logoContainer.layer.layer);
 	
-	splashScreen.splashFont = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_NEVIS_20));
+	splashScreen.splashFont = get_font_styled_20();
 
 	text_layer_init(&splashScreen.versionLayer, GRect(0,71,144,25));
-	text_layer_set_font(&splashScreen.versionLayer,splashScreen.splashFont);
+	text_layer_set_font(&splashScreen.versionLayer,*splashScreen.splashFont);
 	text_layer_set_text_alignment(&splashScreen.versionLayer, GTextAlignmentCenter);
 	text_layer_set_text_color(&splashScreen.versionLayer, GColorWhite);
 	text_layer_set_background_color(&splashScreen.versionLayer, GColorBlack);
@@ -74,7 +77,7 @@ void build_splash_screen(void) {
 	layer_add_child(&splashScreen.splashWindow.layer,&splashScreen.versionLayer.layer);
 	
 	text_layer_init(&splashScreen.loadingLayer, GRect(0,106,144,50));
-	text_layer_set_font(&splashScreen.loadingLayer,splashScreen.splashFont);
+	text_layer_set_font(&splashScreen.loadingLayer,*splashScreen.splashFont);
 	text_layer_set_text_alignment(&splashScreen.loadingLayer, GTextAlignmentCenter);
 	text_layer_set_text_color(&splashScreen.loadingLayer, GColorWhite);
 	text_layer_set_background_color(&splashScreen.loadingLayer, GColorBlack);
@@ -85,7 +88,6 @@ void build_splash_screen(void) {
 void unload_window_manager_resources(void) {
 	layer_remove_from_parent(&splashScreen.logoContainer.layer.layer);
 	bmp_deinit_container(&splashScreen.logoContainer);
-	fonts_unload_custom_font(splashScreen.splashFont);
 }
 
 Window* push_error_window() {
@@ -101,6 +103,19 @@ Window* push_error_window() {
 //---------------------------------------------------------------------------------------
 // Public variables and methods	
 //---------------------------------------------------------------------------------------
+
+WindowThemes get_window_theme(void) {
+	return windowTheme;
+}
+
+void set_window_theme(WindowThemes windowThemeIn) {
+	windowTheme = windowThemeIn;
+	if(windowTheme == LIGHT) {
+		layer_set_hidden(&inverterLayer.layer,false);
+	} else {
+		layer_set_hidden(&inverterLayer.layer,true);
+	}
+}
 
 void start_appropriate_update(void) {
 
@@ -140,6 +155,7 @@ void window_manager_push_menu(void) {
 void init_window_manager(void) {
 	layersToProcess = NOTHING_TO_UPDATE;
 	windowManagerState = WM_INIT;
+	init_fonts();
 	
 	window_init(&mainWindow, "PebblePal Main");
 	window_set_fullscreen(&mainWindow, true);
@@ -164,16 +180,18 @@ void init_window_manager(void) {
 	battery_layer_init(&mainWindow);
 	data_layer_init(&mainWindow);
 	weather_layer_init(&mainWindow);
+	inverter_layer_init(&inverterLayer,GRect(0,0,144,168));
+	layer_add_child(&mainWindow.layer, &inverterLayer.layer);
+	set_window_theme(DARK);
 }
 
 void deinit_window_manager(void) {
-	time_layer_deinit();
-	date_layer_deinit();
 	battery_layer_deinit();
 	data_layer_deinit();
 	weather_layer_deinit();
 	unload_window_manager_resources();
 	message_layer_deinit();
+	deinit_fonts();
 }
 
 void window_manager_set_state(WindowStates state) {
@@ -197,7 +215,12 @@ void window_manager_set_state(WindowStates state) {
 		}
 		else if(&errorWindow == window_stack_get_top_window()) {
 			window_stack_pop(true);
-			window_stack_push(previousWindow, true);
+			if(previousWindow != NULL) {
+				window_stack_push(previousWindow, true);
+			}
+			else {
+				window_stack_push(&mainWindow, true);
+			}
 		}
 	}
 	windowManagerState = state;

@@ -2,6 +2,7 @@
 #include "ringer_control_layer.h"
 #include "timer.h"
 #include "message.h"
+#include "font_manager.h"
 	
 //---------------------------------------------------------------------------------------
 // Private variables and methods	
@@ -20,7 +21,7 @@ TextLayer ringerHeaderText;
 HeapBitmap volUp;
 HeapBitmap volDown;
 HeapBitmap ringer;
-GFont ringerFont;
+GFont * ringerFont;
 uint32_t ringerCommand;
 RingerModes currentRingerMode;
 bool ringerDirection;
@@ -73,12 +74,14 @@ void click_config_provider(ClickConfig **config, void *context) {
 	config[BUTTON_ID_UP]->click.handler = (ClickHandler) volume_up_click_handler;
 }
 
-void configTextLayer(TextLayer* layer, uint8_t yLocation, uint8_t height,bool left,GTextAlignment alignment) {
+void configTextLayer(TextLayer* layer, uint8_t yLocation, uint8_t height,bool left,GTextAlignment alignment,const char * text, Window * me) {
 	text_layer_init(layer, GRect((left ? 0 : 62),yLocation,62,height));
 	text_layer_set_background_color(layer, GColorWhite);
 	text_layer_set_text_color(layer, GColorBlack);
-	text_layer_set_font(layer, ringerFont);
+	text_layer_set_font(layer, *ringerFont);
 	text_layer_set_text_alignment(layer, alignment);
+	text_layer_set_text(layer, text);
+	layer_add_child(&me->layer, &volUpText.layer);
 }
 
 void ringer_window_load(Window *me) {
@@ -91,22 +94,27 @@ void ringer_window_load(Window *me) {
 	action_bar_layer_set_icon(&actionBarLayer, BUTTON_ID_UP, &volUp.bmp);
 	action_bar_layer_set_icon(&actionBarLayer, BUTTON_ID_SELECT, &ringer.bmp);
 	action_bar_layer_set_icon(&actionBarLayer, BUTTON_ID_DOWN, &volDown.bmp);
-	ringerFont = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_NEVIS_15));
-	configTextLayer(&volUpText,17,20,false,GTextAlignmentRight);
-	text_layer_set_text(&volUpText, "Vol+");
-	layer_add_child(&me->layer, &volUpText.layer);
-	configTextLayer(&ringerModeText,64,40,false,GTextAlignmentRight);
-	text_layer_set_text(&ringerModeText, "Change Ringer");
-	layer_add_child(&me->layer, &ringerModeText.layer);
-	configTextLayer(&volDownText,125,20,false,GTextAlignmentRight);
-	text_layer_set_text(&volDownText, "Vol-");
-	layer_add_child(&me->layer, &volDownText.layer);
-	configTextLayer(&ringerHeaderText,0,32,true,GTextAlignmentLeft);
-	text_layer_set_text(&ringerHeaderText, "Current State:");
-	layer_add_child(&me->layer, &ringerHeaderText.layer);
-	configTextLayer(&ringerStateText,32,16,true,GTextAlignmentLeft);
-	text_layer_set_text(&ringerStateText, "Loading");
-	layer_add_child(&me->layer, &ringerStateText.layer);
+	ringerFont = get_font_styled_15();
+	
+	configTextLayer(&volUpText,17,20,false,GTextAlignmentRight, "Vol+", me);
+//	text_layer_set_text(&volUpText, "Vol+");
+//	layer_add_child(&me->layer, &volUpText.layer);
+	
+	configTextLayer(&ringerModeText,64,40,false,GTextAlignmentRight,"Change Ringer",me);
+//	text_layer_set_text(&ringerModeText, "Change Ringer");
+//	layer_add_child(&me->layer, &ringerModeText.layer);
+	
+	configTextLayer(&volDownText,125,20,false,GTextAlignmentRight,"Vol-",me);
+//	text_layer_set_text(&volDownText, "Vol-");
+//	layer_add_child(&me->layer, &volDownText.layer);
+	
+	configTextLayer(&ringerHeaderText,0,32,true,GTextAlignmentLeft,"Current State:",me);
+//	text_layer_set_text(&ringerHeaderText, "Current State:");
+//	layer_add_child(&me->layer, &ringerHeaderText.layer);
+	
+	configTextLayer(&ringerStateText,32,16,true,GTextAlignmentLeft,"Loading",me);
+//	text_layer_set_text(&ringerStateText, "Loading");
+//	layer_add_child(&me->layer, &ringerStateText.layer);
 }
 
 void ringer_window_unload(Window * me) {
@@ -117,7 +125,6 @@ void ringer_window_unload(Window * me) {
 	heap_bitmap_deinit(&ringer);
 	heap_bitmap_deinit(&volDown);
 	action_bar_layer_remove_from_window(&actionBarLayer);
-	fonts_unload_custom_font(ringerFont);
 }
 
 void displayRingerMode(RingerModes ringerMode) {

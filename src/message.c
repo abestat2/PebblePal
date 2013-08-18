@@ -20,7 +20,7 @@
 SendMessageState sendStates = FREE;
 Termination termination = NOT_SET;
 uint32_t sendCommandChkSum;
-uint32_t readCommands[] = {	13,			// first element of array is number of parameters to read	
+uint32_t readCommands[] = {	NUM_BUFFER_COMMANDS,			// first element of array is number of parameters to read	
 						  	CMD_WEATHER_ICON,
 						  	CMD_WEATHER_TEMP_HUMID,
 						    /*The parameters below are for app-start only
@@ -37,8 +37,9 @@ uint32_t readCommands[] = {	13,			// first element of array is number of paramet
 							CMD_BAT_WARN_LEVEL,
 							CMD_UPDATE_RATE,
 							CMD_VIBERATE,
+						    CMD_WATCHFACE_THEME,
 						 }; 
-static uint16_t updateRate = 60;
+uint16_t updateRate = 60;
 uint32_t * commandPointer = &readCommands[0];
 
 void sendNextMessage(uint32_t* cmds) {
@@ -99,6 +100,10 @@ void sendNextMessage(uint32_t* cmds) {
 	app_message_out_release();
 }
 
+void send_watch_version_response_via_timer() {
+	start_timer(SEND_APP_VERSION_TIME,SEND_APP_VERSION_COOKIE);
+}
+
 
 //---------------------------------------------------------------------------------------
 // Public variables and methods	
@@ -123,6 +128,7 @@ void send_buffer(void) {
 void app_send_out(DictionaryIterator* send, void* context) {
 	if(sendStates == AWAITING_ACK_NACK) {
 		sendStates = AWAITING_RESPONSE;
+		start_gap_timer();
 	}
 	else {
 //		set_message("ACK out of place");
@@ -130,26 +136,35 @@ void app_send_out(DictionaryIterator* send, void* context) {
 	return;
 }
 
+void resetStateMachine() {
+	sendStates = FREE;
+	sendCommandChkSum = 0;
+	readCommands[0] = NUM_BUFFER_COMMANDS;
+}
+
 void app_send_failed(DictionaryIterator* failed, AppMessageResult reason, void* context) {
-	if(sendStates == AWAITING_ACK_NACK) {
-		if(termination == SET) {
-			sendStates = FREE;
-			sendCommandChkSum = 0;
-		} 
-		else {
-			sendStates = NEXT_COMMAND;
-			send_buffer();
-		}
-//		set_message("Message NACKed");
+	static int failRetries = 0;
+	
+	// reset state machine back to starting
+	failRetries++;
+	resetStateMachine();
+	// retry connecting to phone if bad command as long as allowed
+	if(failRetries < NACK_RETRY_ATTEMPTS) {
+		send_buffer();
 	}
 	else {
-//		set_message("NACK out of place");
+		// connection to phone verified bad. Stop trying until next minute
+		window_manager_set_state(WM_BAD);
+		failRetries = 0;
 	}
-	window_manager_set_state(WM_BAD);
-	return;
+}
+
+SendMessageState get_state_machine() {
+	return sendStates;
 }
 
 void app_received_msg(DictionaryIterator* received, void* context) {
+	stop_gap_timer();
 	Tuple* receivedTuple = dict_read_first(received);
 	uint16_t currentMessageScreenUpdateFlags = DONE;
 	uint32_t localChkSum = 0;
@@ -218,6 +233,11 @@ void app_received_msg(DictionaryIterator* received, void* context) {
 			case CMD_RINGER_CHANGE_VOLUME:
 				ringer_layer_handle_command((RingerModes)receivedTuple->value->int16);
 				break;
+			case CMD_APP_VERSION:
+				send_watch_version_response_via_timer();
+				break;
+			case CMD_WATCHFACE_THEME:
+				set_window_theme((WindowThemes)receivedTuple->value->int16);
 			default:
 				break;
 		}
@@ -249,5 +269,28 @@ void app_received_msg(DictionaryIterator* received, void* context) {
 
 void app_received_dropped(void* context, AppMessageResult reason) {
 	return;
+}
+
+void send_app_version() {
+	DictionaryIterator *iter;
+	if(get_message_state() == FREE) {
+		AppMessageResult getBuffResult = app_message_out_get(&iter);
+		if(getBuffResult != APP_MSG_OK) {
+			start_timer(SEND_APP_VERSION_TIME,SEND_APP_VERSION_COOKIE);
+			return;
+		}
+		else {
+			if (getBuffResult == APP_MSG_INVALID_ARGS) {
+				return;
+			} 
+		}
+		dict_write_cstring(iter, CMD_APP_VERSION, APP_VERSION_NUMBER);		
+		app_message_out_send();
+		app_message_out_release();
+	}
+	else {
+		start_timer(SEND_APP_VERSION_TIME,SEND_APP_VERSION_COOKIE);
+	}
+
 }
 

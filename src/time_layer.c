@@ -1,6 +1,7 @@
 #include "globals.h"
 #include "time_layer.h"
 #include "window_manager.h"
+#include "font_manager.h"
 
 //---------------------------------------------------------------------------------------
 // Private variables and methods	
@@ -8,7 +9,7 @@
 	
 TimeLayer timeLayer;
 GRect timeLayerBounds = {.origin={.x=13,.y=0},.size={.w=131,.h=40}};
-GFont timeFont;	
+GFont * timeFont;	
 void format_time_in_string(void);
 bool first = true;
 
@@ -73,14 +74,10 @@ void time_layer_init(Window* window, PblTm* time) {
 	timeLayer.milTime = false;
 	time_layer_set_time(time);
 	text_layer_init(&timeLayer.layer, timeLayerBounds);
-	timeFont = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_NEVIS_BOLD_40));
-	text_layer_set_font(&timeLayer.layer, timeFont);
+	timeFont = get_font_styled_bold_40();
+	text_layer_set_font(&timeLayer.layer, *timeFont);
 	text_layer_set_background_color(&timeLayer.layer, GColorBlack);
 	text_layer_set_text_color(&timeLayer.layer, GColorWhite);
 	text_layer_set_text_alignment(&timeLayer.layer, GTextAlignmentCenter);
 	layer_add_child(&window->layer,&timeLayer.layer.layer);
-}
-
-void time_layer_deinit(void) {
-	fonts_unload_custom_font(timeFont);
 }

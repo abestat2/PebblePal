@@ -13,6 +13,11 @@
 #define UPDATE_DATE				0x0080
 #define UPDATE_HANGOUT			0x0100
 	
+typedef enum {
+	DARK=0,
+	LIGHT,
+}WindowThemes;
+	
 // Window manager States
 typedef enum {
 	WM_INIT = 0,
@@ -30,7 +35,7 @@ typedef enum {
 typedef struct {
 	Window splashWindow;
 	BmpContainer logoContainer;
-	GFont splashFont;
+	GFont * splashFont;
 	TextLayer versionLayer;
 	TextLayer loadingLayer;
 }SplashScreen;
@@ -44,4 +49,6 @@ void window_manager_mark_layer_done(uint16_t);
 void window_manager_push_menu(void);
 uint16_t window_manager_get_layers_to_process(void);
 void start_appropriate_update(void);
+void set_window_theme(WindowThemes );
+WindowThemes get_window_theme(void);
 #endif

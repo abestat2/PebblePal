@@ -17,7 +17,7 @@ const uint8_t batteryIcons[] = {
 	RESOURCE_ID_ICON_BATTERY_LOW,
 	RESOURCE_ID_ICON_BATTERY_PLUGGED,
 };
-static uint8_t drawingProgressFlags = DONE;
+uint8_t drawingProgressFlags = DONE;
 
 void reload_icon(int icon_index) {
 	if(batteryLayer.imageLoaded) {

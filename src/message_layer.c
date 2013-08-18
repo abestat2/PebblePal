@@ -2,12 +2,13 @@
 #include "message_layer.h"
 #include "window_manager.h"
 #include "util.h"
+#include "font_manager.h"
 	
 //---------------------------------------------------------------------------------------
 // Private variables and methods	
 //---------------------------------------------------------------------------------------
 
-static MessageLayer messageLayer;
+MessageLayer messageLayer;
 GRect baseLayerBounds = {.origin={.x=13,.y=118},.size={.w=106,.h=52}};
 GRect smsImageBounds = {.origin={.x=0,.y=0},.size={.w=26,.h=25}};
 GRect smsTextBounds = {.origin={.x=0,.y=25},.size={.w=26,.h=27}};
@@ -92,7 +93,7 @@ void message_layer_init(Window * window) {
 	messageLayer.missedCalls = 0;
 	messageLayer.hangouts = 0;
 	//Load font
-	messageLayer.messageFont = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_TIMES_ROMAN_15));
+	messageLayer.messageFont = get_font_15();
 	// initialize base layer
 	layer_init(&messageLayer.baseLayer, baseLayerBounds);
 	layer_add_child(&window->layer, &messageLayer.baseLayer);
@@ -101,7 +102,7 @@ void message_layer_init(Window * window) {
 	messageLayer.smsImageLayer.update_proc = load_sms_image;
 	layer_add_child(&messageLayer.baseLayer, &messageLayer.smsImageLayer);	
 	text_layer_init(&messageLayer.smsTextLayer, smsTextBounds);
-	text_layer_set_font(&messageLayer.smsTextLayer, messageLayer.messageFont);
+	text_layer_set_font(&messageLayer.smsTextLayer, *messageLayer.messageFont);
 	text_layer_set_text_alignment(&messageLayer.smsTextLayer, GTextAlignmentCenter);
 	text_layer_set_background_color(&messageLayer.smsTextLayer, GColorBlack);
 	text_layer_set_text_color(&messageLayer.smsTextLayer, GColorWhite);
@@ -111,7 +112,7 @@ void message_layer_init(Window * window) {
 	messageLayer.gmailImageLayer.update_proc = load_gmail_image;
 	layer_add_child(&messageLayer.baseLayer, &messageLayer.gmailImageLayer);	
 	text_layer_init(&messageLayer.gmailTextLayer, gmailTextBounds);
-	text_layer_set_font(&messageLayer.gmailTextLayer, messageLayer.messageFont);
+	text_layer_set_font(&messageLayer.gmailTextLayer, *messageLayer.messageFont);
 	text_layer_set_text_alignment(&messageLayer.gmailTextLayer, GTextAlignmentCenter);
 	text_layer_set_background_color(&messageLayer.gmailTextLayer, GColorBlack);
 	text_layer_set_text_color(&messageLayer.gmailTextLayer, GColorWhite);
@@ -121,7 +122,7 @@ void message_layer_init(Window * window) {
 	messageLayer.missedCallImageLayer.update_proc = load_phone_image;
 	layer_add_child(&messageLayer.baseLayer, &messageLayer.missedCallImageLayer);	
 	text_layer_init(&messageLayer.missedCallTextLayer, missedCallTextBounds);
-	text_layer_set_font(&messageLayer.missedCallTextLayer, messageLayer.messageFont);
+	text_layer_set_font(&messageLayer.missedCallTextLayer, *messageLayer.messageFont);
 	text_layer_set_text_alignment(&messageLayer.missedCallTextLayer, GTextAlignmentCenter);
 	text_layer_set_background_color(&messageLayer.missedCallTextLayer, GColorBlack);
 	text_layer_set_text_color(&messageLayer.missedCallTextLayer, GColorWhite);
@@ -144,7 +145,6 @@ void message_layer_deinit(void) {
 	unload_gmail_image();
 	unload_phone_image();
 	unload_hangout_image();
-	fonts_unload_custom_font(messageLayer.messageFont);
 }
 
 void message_layer_set_sms(uint16_t unreadSms) {

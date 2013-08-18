@@ -23,7 +23,7 @@ typedef struct {
 	bool smsImageLoaded;
 	bool missedCallImageLoaded;
 	bool hangoutImageLoaded;
-	GFont messageFont;
+	GFont * messageFont;
 }MessageLayer;
 
 void message_layer_init(Window*);

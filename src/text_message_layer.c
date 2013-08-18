@@ -139,7 +139,7 @@ void send_request_for_texters() {
 }
 
 void text_message_layer_set_texters(char * textersString) {
-	uint16_t size = cstringLength(textersString);
+	uint16_t size = strlen(textersString);
 	memcpy(&texters[0],textersString,size);
 	texturesLoaded = true;
 	numTexters = get_num_texters();
@@ -167,10 +167,10 @@ void init_texters_message_layer() {
 //---------------------------------------------------------------------------------------
 // Private variables and methods	
 //---------------------------------------------------------------------------------------
-static bool messagesLoaded = false;
-static char messages[NUMBER_OF_MESSAGES*MESSAGE_STRING_SIZE + 1];
-static MenuLayer messagesMenuLayer;
-static Window messagesMenuWindow;
+bool messagesLoaded = false;
+char messages[NUMBER_OF_MESSAGES*MESSAGE_STRING_SIZE + 1];
+MenuLayer messagesMenuLayer;
+Window messagesMenuWindow;
 uint16_t selectedText;
 
 uint16_t messages_menu_get_num_sections_callback(MenuLayer *me, void *data) {
@@ -277,7 +277,7 @@ void send_request_for_messages() {
 }
 
 void text_message_layer_set_messages(char * messagesString) {
-	uint16_t size = cstringLength(messagesString);
+	uint16_t size = strlen(messagesString);
 	memcpy(&messages[0],messagesString,size);
 	messagesLoaded = true;
 	menu_layer_reload_data(&messagesMenuLayer);

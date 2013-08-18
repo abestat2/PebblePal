@@ -2,6 +2,7 @@
 #include "main_menu.h"
 #include "text_message_layer.h"
 #include "ringer_control_layer.h"
+#include "settings_menu.h"
 
 MenuLayer menuLayer;
 Window menuWindow;	
@@ -30,6 +31,9 @@ void main_menu_draw_row_callback(GContext* ctx, const Layer *cell_layer, MenuInd
 		case 1:
 			menu_cell_basic_draw(ctx,cell_layer,"Control Ringer","Volume & Mode",NULL);
 			break;
+		case 2:
+			menu_cell_basic_draw(ctx, cell_layer, "Settings", "Watch App Settings", NULL);
+			break;
 		default:
 			break;
 	}
@@ -42,6 +46,9 @@ void main_menu_select_callback(MenuLayer *me, MenuIndex *cell_index, void *data)
 			break;
 		case 1:
 			init_ringer_control_layer();
+			break;
+		case 2:
+			init_settings_menu_layer();
 			break;
 		default:
 			break;
